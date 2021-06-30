@@ -6,7 +6,7 @@ import type {
 } from 'discord.js';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { MessageEmbed, MessageButton } from 'discord.js';
-import { Client } from 'genius-lyrics';
+import Client from 'genius-lyrics';
 // @ts-ignore
 import { getLyrics } from 'genius-lyrics-api';
 import arrayShuffle from 'array-shuffle';
@@ -14,7 +14,7 @@ import type { GameData } from 'src/@types';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.defer();
-	const genius = new Client(process.env.GENIUS_KEY);
+	const genius = new Client.Client(process.env.GENIUS_KEY);
 
 	const songs = [
 		6702223, 5506107, 6745675, 5056283, 5241100, 5127258, 5346647, 5595696,
