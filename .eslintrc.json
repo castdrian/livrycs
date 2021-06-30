@@ -18,7 +18,7 @@
         "prettier"
     ],
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", "tab"],
         "no-console": "off",
         "linebreak-style": ["error", "windows"]
     }
