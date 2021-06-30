@@ -9,6 +9,7 @@
 ### Open source Liv lyrics guessing game wrapped inside a Discord Bot
 
 Good 4 u, you look happy and healthy.
+[Play Livrycs!](https://discord.com/api/oauth2/authorize?client_id=859760543602311218&permissions=0&scope=applications.commands%20bot')
 
 ### Donations
 
