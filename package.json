@@ -28,8 +28,11 @@
     "*.js": "eslint --cache --fix"
   },
   "dependencies": {
-    "discord.js": "^13.0.0-dev.edf6f0ca7012b6b678367a1b5d716d0b85e23ba3",
+    "array-shuffle": "^2.0.0",
+    "discord.js": "^13.0.0-dev.64f093f.1625054868",
     "dotenv": "^10.0.0",
+    "genius-lyrics": "^4.2.9",
+    "genius-lyrics-api": "^3.0.6",
     "last-commit-log": "^3.1.1",
     "md5": "^2.3.0",
     "node-fetch": "^2.6.1",

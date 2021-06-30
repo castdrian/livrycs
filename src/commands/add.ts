@@ -17,5 +17,5 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 
 export const data: ApplicationCommandData = {
 	name: 'add',
-	description: "Shows Livrycs' ping.",
+	description: 'Invite Livrycs.',
 };

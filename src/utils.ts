@@ -33,26 +33,12 @@ export function GenerateSnowflake(): string {
 	return rv;
 }
 
-export function cleanBreaks(str: string): string {
-	return str.replace(/\n\r/g, '');
-}
-
 export function normalize(num: number): string {
 	if (typeof num === 'undefined' || typeof num !== 'number') return '';
 	return num.toLocaleString(undefined, {
 		minimumIntegerDigits: 2,
 		useGrouping: false,
 	});
-}
-
-export function trimArray(arr: Array<string>) {
-	let trimmed: Array<string> = [];
-	if (arr.length > 10) {
-		const len = arr.length - 10;
-		trimmed = arr.slice(0, 10);
-		arr.push(`${len} more...`);
-	}
-	return trimmed;
 }
 
 export async function LoadEvents(livrycs: Client): Promise<void> {

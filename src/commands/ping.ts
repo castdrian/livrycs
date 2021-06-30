@@ -20,7 +20,10 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 				.setThumbnail(
 					interaction.client.user?.displayAvatarURL() as string
 				)
-				.setFooter('Livrycs | © adrifcastr');
+				.setFooter(
+					'Livrycs | © adrifcastr',
+					interaction.client.user?.displayAvatarURL() as string
+				);
 
 			interaction.editReply({ embeds: [embed] });
 		},

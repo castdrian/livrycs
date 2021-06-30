@@ -19,3 +19,8 @@ interface Event {
 	process?: boolean;
 	run(...args: unknown[]): Promise<void>;
 }
+
+interface GameData {
+	embeds: Array<Discord.MessageEmbed>;
+	components: Array<Array<Discord.MessageActionRowComponentResolvable>>;
+}
