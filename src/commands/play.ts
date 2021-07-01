@@ -40,15 +40,16 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			?.split(/\[.+?\]/)
 			.map((x) => x.split('\n').filter((e) => e))
 			.filter((x) => x.length >= 5);
-		return { lyrics, parts, metadata };
+
+		const verse = parts[Math.floor(Math.random() * parts.length)];
+		return { lyrics, verse, metadata };
 	}
 	async function gameEmbed(): Promise<GameData> {
 		const data = await SongData();
-		let { parts } = data;
+		let { verse } = data;
 		// eslint-disable-next-line no-await-in-loop
-		while (!data.parts) parts = await SongData();
+		while (!data.verse) verse = await SongData();
 
-		const verse = parts[Math.floor(Math.random() * parts.length)];
 		const lines = verse.slice(0, 5);
 		const index = Math.floor(Math.random() * lines.length);
 		const solution = lines[index];
