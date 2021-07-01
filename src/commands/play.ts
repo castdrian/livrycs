@@ -132,19 +132,10 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.editReply(data);
 	let ended = false;
 	setTimeout(() => {
-		const embed = new MessageEmbed()
-			.setColor('#938ACD')
-			.setDescription(
-				'The game has timed out.\nYou can start a new one. <:sour:845971068195438603>'
-			)
-			.setThumbnail(interaction.client.user?.displayAvatarURL() as string)
-			.setFooter(
-				'Livrycs | © adrifcastr',
-				interaction.client.user?.displayAvatarURL() as string
-			);
 		if (!ended) {
 			interaction.editReply({
-				embeds: [embed],
+				content:
+					'The game has timed out.\nYou can start a new one. <:sour:845971068195438603>',
 				components: [],
 			});
 		}
@@ -170,41 +161,15 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			ended = true;
 			await interaction.editReply({ components: [] });
 		} else if (i.customID === 'correct') {
-			const embed = new MessageEmbed()
-				.setColor('#938ACD')
-				.setDescription(
-					'Your answer was correct! <:sour:845971068195438603>'
-				)
-				.setThumbnail(
-					interaction.client.user?.displayAvatarURL() as string
-				)
-				.setFooter(
-					'Livrycs | © adrifcastr',
-					interaction.client.user?.displayAvatarURL() as string
-				);
 			ended = true;
-
 			await interaction.editReply({
-				embeds: [embed],
+				content: 'Your answer was correct! <:sour:845971068195438603>',
 				components: [buttons],
 			});
 		} else if (i.customID === 'incorrect') {
-			const embed = new MessageEmbed()
-				.setColor('#938ACD')
-				.setDescription(
-					'Your answer was wrong! <:sour:845971068195438603>'
-				)
-				.setThumbnail(
-					interaction.client.user?.displayAvatarURL() as string
-				)
-				.setFooter(
-					'Livrycs | © adrifcastr',
-					interaction.client.user?.displayAvatarURL() as string
-				);
 			ended = true;
-
 			await interaction.editReply({
-				embeds: [embed],
+				content: 'Your answer was wrong! <:sour:845971068195438603>',
 				components: [buttons],
 			});
 		}
@@ -212,21 +177,11 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 
 	// @ts-ignore
 	return collector.on('end', async () => {
-		const embed = new MessageEmbed()
-			.setColor('#938ACD')
-			.setDescription(
-				'The game has timed out.\nYou can start a new one. <:sour:845971068195438603>'
-			)
-			.setThumbnail(interaction.client.user?.displayAvatarURL() as string)
-			.setFooter(
-				'Livrycs | © adrifcastr',
-				interaction.client.user?.displayAvatarURL() as string
-			);
-
 		if (!ended) {
 			ended = true;
 			interaction.editReply({
-				embeds: [embed],
+				content:
+					'The game has timed out.\nYou can start a new one. <:sour:845971068195438603>',
 				components: [],
 			});
 		}
