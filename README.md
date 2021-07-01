@@ -11,6 +11,8 @@
 Good 4 u, you look happy and healthy.
 [Play Livrycs!](https://discord.com/api/oauth2/authorize?client_id=859760543602311218&permissions=0&scope=applications.commands%20bot)
 
+![img](https://depressed-lemonade.me/fd7PlNC.png)
+
 ### Donations
 
 Donations are gladly accepted. Please send them to my [Paypal.me](https://www.paypal.me/adrifcastr) or [Patreon](https://www.patreon.com/gideonbot)
