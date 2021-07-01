@@ -7,7 +7,7 @@ import recursive from 'recursive-readdir';
 import path from 'path';
 import Md5 from 'md5';
 import fetch from 'node-fetch';
-import type { Command } from './@types/index';
+import type { Command } from 'src/@types';
 
 export function fetchJSON(url: string): Promise<any> {
 	// eslint-disable-next-line no-async-promise-executor

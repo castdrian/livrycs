@@ -1,6 +1,6 @@
 import type { ApplicationCommandData, CommandInteraction } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
-import { fetchJSON } from '../utils.js';
+import { fetchJSON } from 'src/utils';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.defer();
