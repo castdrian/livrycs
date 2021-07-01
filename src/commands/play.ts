@@ -4,13 +4,12 @@ import type {
 	Message,
 	MessageComponentInteraction,
 } from 'discord.js';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { MessageEmbed, MessageButton } from 'discord.js';
 import { Client } from 'genius-lyrics';
 // @ts-ignore
 import { getLyrics } from 'genius-lyrics-api';
 import arrayShuffle from 'array-shuffle';
-import type { GameData } from 'src/@types';
+import type { GameData, SongInfo } from 'src/@types';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.defer();
@@ -28,7 +27,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		5499671, 5897782, 6858319, 5697646, 5759069, 6745615, 6836079,
 	];
 
-	async function SongData(): Promise<any> {
+	async function SongData(): Promise<SongInfo> {
 		const song = songs[Math.floor(Math.random() * songs.length)];
 
 		const metadata = await genius.songs.get(song);
@@ -46,9 +45,10 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 	}
 	async function gameEmbed(): Promise<GameData> {
 		const data = await SongData();
-		let { verse } = data;
+		// eslint-disable-next-line prefer-const
+		let { verse, lyrics } = data;
 		// eslint-disable-next-line no-await-in-loop
-		while (!data.verse) verse = await SongData();
+		while (!verse) verse = (await SongData()).verse;
 
 		const lines = verse.slice(0, 5);
 		const index = Math.floor(Math.random() * lines.length);
@@ -57,7 +57,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		splice.splice(index, 1, '`?????????????`');
 		const desc = splice.join('\n');
 
-		const all = data.lyrics
+		const all = lyrics
 			.replace(/\[.+?\]/g, '')
 			.split('\n')
 			.filter(

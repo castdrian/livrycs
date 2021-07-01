@@ -1,4 +1,5 @@
 import Discord from 'discord.js';
+import type { Song } from 'genius-lyrics';
 
 declare module 'discord.js' {
 	interface Client {
@@ -23,4 +24,10 @@ interface Event {
 interface GameData {
 	embeds: Array<Discord.MessageEmbed>;
 	components: Array<Array<Discord.MessageActionRowComponentResolvable>>;
+}
+
+interface SongInfo {
+	lyrics: string;
+	verse: Array<string> | undefined;
+	metadata: Song;
 }
