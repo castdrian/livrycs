@@ -43,6 +43,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		const verse = parts[Math.floor(Math.random() * parts.length)];
 		return { lyrics, verse, metadata };
 	}
+
 	async function gameEmbed(): Promise<GameData> {
 		const data = await SongData();
 		// eslint-disable-next-line prefer-const
@@ -135,7 +136,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		if (!ended) {
 			interaction.editReply({
 				content:
-					'The game has timed out.\nYou can start a new one. <:sour:845971068195438603>',
+					'The game has timed out. You can start a new one. <:sour:845971068195438603>',
 				components: [],
 			});
 		}
@@ -181,7 +182,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			ended = true;
 			interaction.editReply({
 				content:
-					'The game has timed out.\nYou can start a new one. <:sour:845971068195438603>',
+					'The game has timed out. You can start a new one. <:sour:845971068195438603>',
 				components: [],
 			});
 		}

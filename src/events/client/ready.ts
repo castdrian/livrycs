@@ -6,7 +6,7 @@ import {
 	DeployCommands,
 	GenerateSnowflake,
 	CITest,
-} from 'src/utils';
+} from '../../utils.js';
 
 export default {
 	name: 'ready',
