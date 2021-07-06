@@ -39,6 +39,11 @@ export default {
 
 		console.log('Ready!');
 
+		livrycs.user?.setActivity({
+			type: 'LISTENING',
+			name: 'to Olivia Rodrigo',
+		});
+
 		setInterval(
 			() =>
 				livrycs.user?.setActivity({
