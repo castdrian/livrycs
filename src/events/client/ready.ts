@@ -41,14 +41,14 @@ export default {
 
 		livrycs.user?.setActivity({
 			type: 'LISTENING',
-			name: 'to Olivia Rodrigo',
+			name: 'Olivia Rodrigo',
 		});
 
 		setInterval(
 			() =>
 				livrycs.user?.setActivity({
 					type: 'LISTENING',
-					name: 'to Olivia Rodrigo',
+					name: 'Olivia Rodrigo',
 				}),
 			60 * 60 * 1000
 		);
