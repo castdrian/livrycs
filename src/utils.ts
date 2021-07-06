@@ -2,12 +2,52 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable consistent-return */
 import type { Client, Snowflake } from 'discord.js';
-import { CommandInteraction } from 'discord.js';
+import {
+	CommandInteraction,
+	WebhookClient,
+	Util,
+	MessageEmbed,
+} from 'discord.js';
 import recursive from 'recursive-readdir';
 import path from 'path';
 import Md5 from 'md5';
 import fetch from 'node-fetch';
 import type { Command } from 'src/@types';
+
+const { log } = console;
+
+// eslint-disable-next-line func-names
+console.log = function (message: any, conly: boolean) {
+	let url = process.env.LOG_WEBHOOK_URL;
+	if (url && !conly) {
+		url = url
+			.replace('https://discordapp.com/api/webhooks/', '')
+			.replace('https://discord.com/api/webhooks/', '');
+		const split = url.split('/');
+		if (split.length < 2) return;
+
+		const client = new WebhookClient(split[0] as Snowflake, split[1]);
+
+		// eslint-disable-next-line no-param-reassign
+		if (message instanceof Error)
+			// eslint-disable-next-line no-param-reassign
+			message = message.stack ?? message.message;
+
+		// eslint-disable-next-line eqeqeq
+		if (typeof message == 'string') {
+			// eslint-disable-next-line no-restricted-syntax
+			for (const msg of Util.splitMessage(message, { maxLength: 1980 })) {
+				client.send({ content: msg, username: 'Livrycs-Logs' });
+			}
+		} else client.send({ embeds: [message], username: 'Livrycs-Logs' });
+
+		if (!(message instanceof MessageEmbed)) {
+			// eslint-disable-next-line no-param-reassign
+			message = message.replace(/`/g, '').trim();
+		}
+	}
+	return log.apply(console, [message]);
+};
 
 export function fetchJSON(url: string): Promise<any> {
 	// eslint-disable-next-line no-async-promise-executor
@@ -21,6 +61,20 @@ export function fetchJSON(url: string): Promise<any> {
 			reject(e);
 		}
 	});
+}
+
+export function truncate(
+	str: string,
+	length: number,
+	useWordBoundary: boolean
+): string {
+	if (str.length <= length) return str;
+	const subString = str.substr(0, length - 1);
+	return `${
+		useWordBoundary
+			? subString.substr(0, subString.lastIndexOf(' '))
+			: subString
+	}...`;
 }
 
 export function GenerateSnowflake(): string {
@@ -78,7 +132,8 @@ export async function LoadEvents(livrycs: Client): Promise<void> {
 				console.log(
 					`${normalize(
 						jsfiles.indexOf(filePath) + 1
-					)} - ${filePath} loaded in ${took}ms`
+					)} - ${filePath} loaded in ${took}ms`,
+					true
 				);
 			}
 
@@ -127,7 +182,8 @@ export async function LoadCommands(livrycs: Client): Promise<void> {
 				console.log(
 					`${normalize(
 						jsfiles.indexOf(filePath) + 1
-					)} - ${filePath} loaded in ${took}ms`
+					)} - ${filePath} loaded in ${took}ms`,
+					true
 				);
 			}
 

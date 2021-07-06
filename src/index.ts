@@ -4,7 +4,7 @@ import PrettyError from 'pretty-error';
 import { LoadEvents } from './utils.js';
 
 dotenv.config({ path: '../.env' });
-PrettyError.start();
+PrettyError.start().withoutColors();
 
 const livrycs = new Client({
 	intents: 1,

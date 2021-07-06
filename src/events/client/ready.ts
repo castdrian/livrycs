@@ -38,10 +38,15 @@ export default {
 		await DeployCommands(livrycs);
 
 		console.log('Ready!');
-		livrycs.user?.setActivity({
-			type: 'LISTENING',
-			name: 'to Olivia Rodrigo',
-		});
+
+		setInterval(
+			() =>
+				livrycs.user?.setActivity({
+					type: 'LISTENING',
+					name: 'to Olivia Rodrigo',
+				}),
+			60 * 60 * 1000
+		);
 
 		const lcl = new LCL('../');
 		const commit = await lcl.getLastCommit();

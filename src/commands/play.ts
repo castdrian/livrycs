@@ -10,6 +10,7 @@ import { Client } from 'genius-lyrics';
 import { getLyrics } from 'genius-lyrics-api';
 import arrayShuffle from 'array-shuffle';
 import type { GameData, SongInfo } from 'src/@types';
+import { truncate } from '../utils.js';
 
 export async function run(interaction: CommandInteraction): Promise<unknown> {
 	await interaction.defer();
@@ -27,7 +28,7 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		5499671, 5897782, 6858319, 5697646, 5759069, 6745615, 6836079,
 	];
 
-	async function SongData(): Promise<SongInfo> {
+	async function SongData(): Promise<SongInfo | void> {
 		const song = songs[Math.floor(Math.random() * songs.length)];
 
 		const metadata = await genius.songs.get(song);
@@ -39,17 +40,17 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 			?.split(/\[.+?\]/)
 			.map((x) => x.split('\n').filter((e) => e))
 			.filter((x) => x.length >= 5);
-
+		if (!parts) return undefined;
 		const verse = parts[Math.floor(Math.random() * parts.length)];
 		return { lyrics, verse, metadata };
 	}
 
 	async function gameEmbed(): Promise<GameData> {
-		const data = await SongData();
+		const data = (await SongData()) as SongInfo;
 		// eslint-disable-next-line prefer-const
 		let { verse, lyrics } = data;
 		// eslint-disable-next-line no-await-in-loop
-		while (!verse) verse = (await SongData()).verse;
+		while (!verse) verse = ((await SongData()) as SongInfo)?.verse;
 
 		const lines = verse.slice(0, 5);
 		const index = Math.floor(Math.random() * lines.length);
@@ -70,15 +71,15 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 		const choices = [
 			new MessageButton()
 				.setStyle('PRIMARY')
-				.setLabel(solution)
+				.setLabel(truncate(solution, 77, true))
 				.setCustomID('correct'),
 			new MessageButton()
 				.setStyle('PRIMARY')
-				.setLabel(opts[0])
+				.setLabel(truncate(opts[0], 77, true))
 				.setCustomID('incorrect'),
 			new MessageButton()
 				.setStyle('PRIMARY')
-				.setLabel(opts[1])
+				.setLabel(truncate(opts[1], 77, true))
 				.setCustomID('incorrect'),
 		];
 
