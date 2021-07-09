@@ -38,26 +38,18 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 
 		const parts = lyrics
 			?.split(/\[.+?\]/)
-			.map((x) => x.split('\n').filter((e) => e))
+			.map((x) => x.split('\n')?.filter((e) => e))
 			.filter((x) => x.length >= 5);
 		if (!parts) return undefined;
-		const verse = parts[Math.floor(Math.random() * parts.length)];
-		return { lyrics, verse, metadata };
-	}
-
-	async function gameEmbed(): Promise<GameData> {
-		const data = (await SongData()) as SongInfo;
-		// eslint-disable-next-line prefer-const
-		let { verse, lyrics } = data;
-		// eslint-disable-next-line no-await-in-loop
-		while (!verse) verse = ((await SongData()) as SongInfo)?.verse;
-
-		const lines = verse.slice(0, 5);
+		const verse = parts?.[Math.floor(Math.random() * parts.length)];
+		if (!verse) return undefined;
+		const lines = verse?.slice(0, 5);
 		const index = Math.floor(Math.random() * lines.length);
-		const solution = lines[index];
+		const solution = lines?.[index];
+		if (!solution) return undefined;
 		const splice = lines;
-		splice.splice(index, 1, '`?????????????`');
-		const desc = splice.join('\n');
+		splice?.splice(index, 1, '`?????????????`');
+		const desc = splice?.join('\n');
 
 		const all = lyrics
 			.replace(/\[.+?\]/g, '')
@@ -66,7 +58,18 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 				(x: string) =>
 					x && x !== 'Lyrics from Snippet:' && x !== solution
 			);
-		const opts = arrayShuffle(all).slice(0, 2) as string[];
+		const opts = arrayShuffle(all)?.slice(0, 2) as string[];
+		if (!opts) return undefined;
+
+		return { metadata, opts, solution, desc };
+	}
+
+	async function gameEmbed(): Promise<GameData> {
+		let data = (await SongData()) as SongInfo;
+		// eslint-disable-next-line no-await-in-loop
+		while (!data) data = (await SongData()) as SongInfo;
+		// eslint-disable-next-line prefer-const
+		let { opts, solution, desc } = data;
 
 		const choices = [
 			new MessageButton()
@@ -75,11 +78,11 @@ export async function run(interaction: CommandInteraction): Promise<unknown> {
 				.setCustomID('correct'),
 			new MessageButton()
 				.setStyle('PRIMARY')
-				.setLabel(truncate(opts[0], 77, true))
+				.setLabel(truncate(opts?.[0] as string, 77, true))
 				.setCustomID('incorrect'),
 			new MessageButton()
 				.setStyle('PRIMARY')
-				.setLabel(truncate(opts[1], 77, true))
+				.setLabel(truncate(opts?.[1] as string, 77, true))
 				.setCustomID('incorrect'),
 		];
 

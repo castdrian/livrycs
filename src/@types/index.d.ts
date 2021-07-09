@@ -27,7 +27,8 @@ interface GameData {
 }
 
 interface SongInfo {
-	lyrics: string;
-	verse: Array<string> | undefined;
+	solution: string;
+	opts: Array<string> | undefined;
 	metadata: Song;
+	desc: string;
 }
